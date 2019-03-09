@@ -1,0 +1,15 @@
+_message_sync = get_path_info("../MessageSync", "abspath")
+
+message_sync_sources = [
+    "$_message_sync/interface/message_sync.h",
+    "$_message_sync/source/message_sync_impl.h",
+    "$_message_sync/source/message_sync_impl.cpp",
+    "$_message_sync/message_sync.cpp",
+]
+
+if (is_win) {
+    message_sync_sources += [
+        "$_message_sync/MessageSync.def",
+        "$_message_sync/dllmain.cpp",
+    ]
+}

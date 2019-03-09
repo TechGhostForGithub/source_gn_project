@@ -1,0 +1,203 @@
+import("//library_template.gni")
+
+# 定义当前是否是测试模式
+declare_args() {
+    is_test = false
+}
+
+# 工程模块
+projects = [
+    "//base/asynevent:asynevent",
+    "//base/socket:socket",
+    "//base/protocol:protocol",
+    "//base/http:http",
+    
+    "//system_wrappers:system_wrappers",
+    
+    "//third_party/json:json",
+    "//third_party/sqlite:sqlite",
+    "//third_party/tinyxml:tinyxml",
+    "//third_party/md5:md5",
+    "//third_party/protobuf:protobuf",
+    "//third_party/zlib:zlib",
+
+    "//modules:LogModule",
+    "//modules:MessageSync",
+    "//modules:HttpKernel",
+    "//modules:UserFace",
+    "//modules:CommonHead",
+    "//modules:FileTransfer",
+    "//modules:ImageKernel",
+    "//modules:DataCenter",
+    "//modules:NetworkService",
+    "//modules:MessageKernel",
+    "//modules:FileModule",
+    "//modules:ClientKernel",
+    "//modules:NetworkRouting",
+    "//modules:EngineModule",
+    "//modules:DataReport",
+    "//modules:H5OfflinePkg",
+]
+
+# 过滤各平台相关代码实现
+if (is_win) {
+    set_sources_assignment_filter([ 
+        "*_posix.h", "*_posix.cc",
+        "*_mac.h", "*_mac.cc", "*_mac.mm",
+        "*_android.h", "*_android.cc",
+        "*_jni.h", "*_jni.cc",
+    ])
+} 
+if (is_mac) {
+    set_sources_assignment_filter([ 
+        "*_win.cc", "*_win.h", 
+        "*_posix.h", "*_posix.cc",
+        "*_android.h", "*_android.cc",
+        "*_jni.h", "*_jni.cc",
+    ])
+} 
+if (is_linux) {
+    set_sources_assignment_filter([ 
+        "*_win.cc", "*_win.h",
+        "*_mac.h", "*_mac.cc", "*_mac.mm",
+        "*_android.h", "*_android.cc",
+        "*_jni.h", "*_jni.cc",
+    ])
+}
+
+# 组装工程和编译后执行动作
+if (!is_test) {
+    group("ccore"){
+        deps = projects
+        deps += [ "//:dispatch_for_ide" ]
+    }
+} else {
+    executable("test") {
+        if (defined(configs)) {
+            configs += [ ":qt_config" ]
+        } else {
+            configs = [ ":qt_config" ]
+        }
+        
+        deps = [
+            "//modules:MessageSync",
+            "//modules:LogModule",
+        ]
+
+        sources = [
+            "//test.cpp",
+        ]
+
+        if (is_mac) {
+            libs = [ "Foundation.framework" ]
+        }
+        
+
+        output_dir = "$root_out_dir"
+    }
+}
+
+# 工程配置
+config("qt_config") {
+    
+    cflags_cc = []
+    include_dirs = [
+        "//",
+        "interface", 
+        "//third_party",
+        "//third_party/testing",
+        "//third_party/protobuf/include",
+        "//third_party/protobuf/src",
+    ]
+
+    if (!is_win) {
+        cflags_cc += [
+            "-fexceptions", 
+            "-Wno-unknown-pragmas", 
+            "-Wno-parentheses-equality", 
+            "-Wno-pragmas", 
+            "-Wno-unused-private-field",
+        ]    
+    } 
+
+    if (is_mac) {
+        defines = [
+            "CCORE_MAC",
+        ]
+    }
+
+    if (is_win) {
+        defines = [
+            "_UNICODE",
+            "UNICODE",
+            "WIN32",
+            "_WINDOWS",
+        ]
+        cflags_cc += ["/W3", "/EHsc"]
+        if (is_debug) {
+            cflags_cc += ["/MTd"]
+        } else {
+            cflags_cc += ["/MT"]
+        }
+    }
+
+    if (is_android) {
+        defines = [
+            "CCORE_ANDROID",
+        ]
+    } 
+    
+    if (is_linux) {
+        defines = [
+            "CCORE_LINUX",
+        ]
+    }
+
+    if (!is_android) {
+        defines += [
+            "AGORA_2_0",
+        ]
+    } else {
+        defines += [
+            "AGORA_2_2",
+        ]
+    }
+
+    if (is_debug) {
+        defines += [ "DEBUG", ]
+    } else {
+        defines += [ "NDEBUG", ]
+    }
+}
+
+# 编译完成后执行动作o
+action("dispatch_for_ide") {
+    arg = [
+        "--kernel", rebase_path("//"),
+        "--outpath", rebase_path("//out"),
+        "--cachepath", rebase_path("$root_out_dir"),
+    ]
+
+    if (is_debug) {
+        arg += [ "--buildmode", "Debug" ]
+    } else {
+        arg += [ "--buildmode", "Release" ]
+    }
+
+    if (is_mac) {
+        arg += ["--platform", "mac"]
+    } else if (is_ios) {
+        arg += ["--platform", "ios"]
+    } else if (is_android) {
+        arg += ["--platform", "android"]
+    } else if (is_win) {
+        arg += ["--platform", "win"]
+    }
+
+    arg += ["--targetcpu", "${target_cpu}"]
+    
+    script = "dispatch_for_ide.py"
+    outputs = [ "$root_out_dir/libccore_gn.a" ]
+    args = arg
+    deps = projects
+}

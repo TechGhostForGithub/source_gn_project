@@ -1,0 +1,5 @@
+LIBRARY DataCenter.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

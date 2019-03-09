@@ -1,0 +1,28 @@
+import("//library_template.gni")
+
+st_library("asynevent") {
+    #if (is_win) {
+    #    precompiled_header = "stdafx.h"
+    #    precompiled_source = "stdafx.cpp"
+    #}
+
+    # source
+    sources = [
+        "asynevent_test.cpp",
+        "asynevent_test.h",
+    ]
+
+    # source: impl
+    if (is_win) {
+        sources += [
+            "impl/asynevent_win.h",
+            "impl/asynevent_win.cpp",
+        ]
+    }
+    if (is_mac || is_ios || is_android || is_linux) {
+        sources += [
+            "impl/asynevent_posix.h",
+            "impl/asynevent_posix.cc",
+        ]
+    }
+}

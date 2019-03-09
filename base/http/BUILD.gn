@@ -1,0 +1,16 @@
+import("//library_template.gni")
+
+st_library("http") {
+    deps = ["//base/socket:socket"]
+
+    #if (is_win) {
+    #    precompiled_header = "stdafx.h"
+    #    precompiled_source = "stdafx.cpp"
+    #}
+
+    # source
+    sources = [
+        "http_test.cpp",
+        "http_test.h",
+    ]
+}

@@ -1,0 +1,15 @@
+_network_service = get_path_info("../NetworkService", "abspath")
+
+network_service_sources = [
+    "$_network_service/interface/network_service.h",
+    "$_network_service/source/network_service_impl.cpp",
+    "$_network_service/source/network_service_impl.h",
+    "$_network_service/network_service.cpp",
+]
+
+if (is_win) {
+    network_service_sources += [
+        "$_network_service/NetworkService.def",
+        "$_network_service/dllmain.cpp",
+    ]
+}

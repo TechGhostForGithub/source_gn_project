@@ -1,0 +1,15 @@
+_engine_module = get_path_info("../EngineModule", "abspath")
+
+engine_module_sources = [
+    "$_engine_module/interface/engine_module.h",
+    "$_engine_module/source/engine_module_impl.h",
+    "$_engine_module/source/engine_module_impl.cpp",
+    "$_engine_module/engine_module.cpp",
+]
+
+if (is_win) {
+    engine_module_sources += [
+        "$_engine_module/engine_module.def",
+        "$_engine_module/dllmain.cpp",
+    ]
+}

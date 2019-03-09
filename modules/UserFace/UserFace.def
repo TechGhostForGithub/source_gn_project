@@ -1,0 +1,5 @@
+LIBRARY UserFace.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

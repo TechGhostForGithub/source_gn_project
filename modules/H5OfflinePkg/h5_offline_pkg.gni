@@ -1,0 +1,15 @@
+_h5_offline_pkg = get_path_info("../H5OfflinePkg", "abspath")
+
+h5_offline_pkg_sources = [
+    "$_h5_offline_pkg/interface/h5_offline_pkg.h",
+    "$_h5_offline_pkg/source/h5_offline_pkg_impl.h",
+    "$_h5_offline_pkg/source/h5_offline_pkg_impl.cpp",
+    "$_h5_offline_pkg/H5OfflinePkg.cpp",
+]
+
+if (is_win) {
+    h5_offline_pkg_sources += [
+        "$_h5_offline_pkg/H5OfflinePkg.def",
+        "$_h5_offline_pkg/dllmain.cpp",
+    ]
+}

@@ -1,0 +1,15 @@
+_data_center = get_path_info("../DataCenter", "abspath")
+
+data_center_sources = [
+    "$_data_center/interface/data_center.h",
+    "$_data_center/source/data_center_impl.cpp",
+    "$_data_center/source/data_center_impl.h",
+    "$_data_center/data_center.cpp",
+]
+
+if (is_win) {
+    data_center_sources += [
+        "$_data_center/DataCenter.def",
+        "$_data_center/dllmain.cpp",
+    ]
+}

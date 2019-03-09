@@ -1,0 +1,5 @@
+LIBRARY HttpKernel.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

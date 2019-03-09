@@ -1,0 +1,15 @@
+_image_kernel = get_path_info("../ImageKernel", "abspath")
+
+image_kernel_sources = [
+    "$_image_kernel/interface/image_kernel.h",
+    "$_image_kernel/source/image_kernel_impl.cpp",
+    "$_image_kernel/source/image_kernel_impl.h",
+    "$_image_kernel/image_kernel.cpp",
+]
+
+if (is_win) {
+    image_kernel_sources += [
+        "$_image_kernel/ImageKernel.def",
+        "$_image_kernel/dllmain.cpp",
+    ]
+}

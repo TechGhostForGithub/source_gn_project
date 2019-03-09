@@ -1,0 +1,15 @@
+_data_report = get_path_info("../DataReport", "abspath")
+
+data_report_sources = [
+    "$_data_report/interface/data_report.h",
+    "$_data_report/source/data_report_impl.cpp",
+    "$_data_report/source/data_report_impl.h",
+    "$_data_report/data_report.cpp",
+]
+
+if (is_win) {
+    data_report_sources += [
+        "$_data_report/DataReport.def",
+        "$_data_report/dllmain.cpp",
+    ]
+}

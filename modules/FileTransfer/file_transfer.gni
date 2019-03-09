@@ -1,0 +1,15 @@
+_file_transfer = get_path_info("../FileTransfer", "abspath")
+
+file_transfer_sources = [
+    "$_file_transfer/interface/file_transfer.h",
+    "$_file_transfer/source/file_transfer_impl.cpp",
+    "$_file_transfer/source/file_transfer_impl.h",
+    "$_file_transfer/file_transfer.cpp",
+]
+
+if (is_win) {
+    file_transfer_sources += [
+        "$_file_transfer/FileTransfer.def",
+        "$_file_transfer/dllmain.cpp",
+    ]
+}

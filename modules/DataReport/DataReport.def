@@ -1,0 +1,5 @@
+LIBRARY DataReport.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

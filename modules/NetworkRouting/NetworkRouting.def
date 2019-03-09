@@ -1,0 +1,5 @@
+LIBRARY NetworkRouting.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

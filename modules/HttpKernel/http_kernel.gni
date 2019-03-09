@@ -1,0 +1,15 @@
+_http_kernel = get_path_info("../HttpKernel", "abspath")
+
+http_kernel_sources = [
+    "$_http_kernel/interface/http_kernel.h",
+    "$_http_kernel/source/http_kernel_impl.cpp",
+    "$_http_kernel/source/http_kernel_impl.h",
+    "$_http_kernel/HttpKernel.cpp",
+]
+
+if (is_win) {
+    http_kernel_sources += [
+        "$_http_kernel/HttpKernel.def",
+        "$_http_kernel/dllmain.cpp",
+    ]
+}

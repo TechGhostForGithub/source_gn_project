@@ -1,0 +1,12 @@
+import("//library_template.gni")
+st_library("tinyxml") {
+    
+    sources = [
+        "tinystr.cpp",
+        "tinystr.h",
+        "tinyxml.cpp",
+        "tinyxml.h",
+        "tinyxmlerror.cpp",
+        "tinyxmlparser.cpp",
+    ]
+}

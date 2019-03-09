@@ -1,0 +1,15 @@
+_message_kernel = get_path_info("../MessageKernel", "abspath")
+
+message_kernel_sources = [
+    "$_message_kernel/interface/message_kernel.h",
+    "$_message_kernel/source/message_kernel_impl.cpp",
+    "$_message_kernel/source/message_kernel_impl.h",
+    "$_message_kernel/message_kernel.cpp",
+]
+
+if (is_win) {
+    message_kernel_sources += [
+        "$_message_kernel/MessageKernel.def",
+        "$_message_kernel/dllmain.cpp",
+    ]
+}

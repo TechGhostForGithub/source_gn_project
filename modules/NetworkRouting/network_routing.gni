@@ -1,0 +1,15 @@
+_network_routing = get_path_info("../NetworkRouting", "abspath")
+
+network_routing_sources = [
+    "$_network_routing/interface/network_routing.h",
+    "$_network_routing/source/network_routing_impl.cpp",
+    "$_network_routing/source/network_routing_impl.h",
+    "$_network_routing/network_routing.cpp",
+]
+
+if (is_win) {
+    network_routing_sources += [
+        "$_network_routing/NetworkRouting.def",
+        "$_network_routing/dllmain.cpp",
+    ]
+}

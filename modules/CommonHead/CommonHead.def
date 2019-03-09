@@ -1,0 +1,5 @@
+LIBRARY CommonHead.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

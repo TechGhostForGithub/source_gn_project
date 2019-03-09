@@ -1,0 +1,14 @@
+import("//library_template.gni")
+
+st_library("socket") {
+    #if (is_win) {
+    #    precompiled_header = "stdafx.h"
+    #    precompiled_source = "stdafx.cpp"
+    #}
+
+    # source
+    sources = [
+        "socket_test.cpp",
+        "socket_test.h",
+    ]
+}

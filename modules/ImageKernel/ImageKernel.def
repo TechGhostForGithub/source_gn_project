@@ -1,0 +1,5 @@
+LIBRARY ImageKernel.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

@@ -1,0 +1,15 @@
+_common_head = get_path_info("../CommonHead", "abspath")
+
+common_head_sources = [
+    "$_common_head/source/common_head_impl.cpp",
+    "$_common_head/source/common_head_impl.h",
+    "$_common_head/interface/common_head.h",
+    "$_common_head/common_head.cpp",
+]
+
+if (is_win) {
+    common_head_sources += [
+        "$_common_head/CommonHead.def",
+        "$_common_head/dllmain.cpp",
+    ]
+}

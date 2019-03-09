@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 13.00
+# Visual Studio 2013
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "field_trial_default", "field_trial_default.vcxproj", "{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system_wrappers", "system_wrappers.vcxproj", "{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|Win32 = Debug|Win32
+		Release|x64 = Release|x64
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Debug|x64.ActiveCfg = Debug|x64
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Debug|x64.Build.0 = Debug|x64
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Debug|Win32.Build.0 = Debug|Win32
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Release|x64.ActiveCfg = Release|x64
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Release|x64.Build.0 = Release|x64
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Release|Win32.ActiveCfg = Release|Win32
+		{E9A89AF1-3AA3-CE47-1951-3DD0481D1C2D}.Release|Win32.Build.0 = Release|Win32
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Debug|x64.ActiveCfg = Debug|x64
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Debug|x64.Build.0 = Debug|x64
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Debug|Win32.Build.0 = Debug|Win32
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Release|x64.ActiveCfg = Release|x64
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Release|x64.Build.0 = Release|x64
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Release|Win32.ActiveCfg = Release|Win32
+		{EE1D61DA-338E-CAA3-0677-9BE5325C6C88}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

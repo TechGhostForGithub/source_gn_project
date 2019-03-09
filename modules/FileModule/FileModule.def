@@ -1,0 +1,5 @@
+LIBRARY FileModule.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

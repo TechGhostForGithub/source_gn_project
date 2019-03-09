@@ -1,0 +1,387 @@
+import("//library_template.gni")
+
+# ClientKernel
+import("//modules/ClientKernel/client_kernel.gni")
+library("ClientKernel") {
+    
+    data_deps = [
+        ":LogModule",
+    ]
+
+    sources = client_kernel_sources
+
+    deps = [
+        "//third_party/tinyxml:tinyxml",
+        "//system_wrappers:system_wrappers",
+    ]
+
+    if (is_win) {
+        defines = [
+            "GN_EXPORT",
+        ]
+
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+            "shell32.lib",
+            "shlwapi.lib",
+        ]
+    }
+}
+
+# CommonHead
+import("//modules/CommonHead/common_head.gni")
+library("CommonHead") {
+    
+    data_deps = [
+        ":HttpKernel",
+        ":LogModule",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+    ]
+
+    sources = common_head_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+        ]
+    }
+}
+
+# DataCenter
+import("//modules/DataCenter/data_center.gni")
+library("DataCenter") {
+    
+    data_deps = [
+        ":LogModule",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+    ]
+
+    sources = data_center_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# DataReport
+import("//modules/DataReport/data_report.gni")
+library("DataReport") {
+
+    data_deps = [
+        ":LogModule",
+        ":HttpKernel",
+    ]
+
+    sources = data_report_sources
+
+    deps = [
+        "//third_party/json:json",
+        "//system_wrappers:system_wrappers",
+    ]
+
+    if (is_win) {        
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+        ]
+    }
+}
+
+# EngineModule
+import("//modules/EngineModule/engine_module.gni")
+library("EngineModule") {
+    
+    data_deps = [
+        ":LogModule",
+    ]
+
+    deps = [
+        "//base/protocol:protocol",
+        "//system_wrappers:system_wrappers",
+    ]
+    
+    sources = engine_module_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+            "user32.lib",
+        ]
+    }
+}
+
+# FileModule
+import("//modules/FileModule/file_module.gni")
+library("FileModule") {
+
+    data_deps = [
+        ":LogModule",
+    ]
+
+    sources = file_module_sources
+
+    deps = [
+        "//third_party/sqlite:sqlite",
+        "//system_wrappers:system_wrappers",
+    ]
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+            "user32.lib",
+        ]
+    }
+}
+
+# FileTransfer
+import("//modules/FileTransfer/file_transfer.gni")
+library("FileTransfer") {
+
+    data_deps = [
+        ":LogModule",
+        ":HttpKernel",
+    ]
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//third_party/json:json",
+    ]
+
+    sources = file_transfer_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# H5OfflinePkg
+import("//modules/H5OfflinePkg/h5_offline_pkg.gni")
+library("H5OfflinePkg") {
+
+    defines = [ 
+        "H5OFFLINEPKG_EXPORTS",
+    ]
+    
+    data_deps = [
+        ":LogModule",
+        ":HttpKernel",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//third_party/md5:md5",
+        "//third_party/tinyxml:tinyxml",
+        "//third_party/json:json",
+        "//third_party/zlib:zlib",
+        "//third_party/zlib:minizip",
+    ]
+
+    sources = h5_offline_pkg_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+            "shell32.lib",
+        ]
+    }
+}
+
+# HttpKernel
+import("//modules/HttpKernel/http_kernel.gni")
+library("HttpKernel") {
+
+    data_deps = [
+        ":LogModule",
+    ]
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//third_party/protobuf:protobuf",
+        "//base/protocol:protocol",
+        "//base/socket:socket",
+    ]
+    sources = http_kernel_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+        ]
+    }
+}
+
+# ImageKernel
+import("//modules/ImageKernel/image_kernel.gni")
+library("ImageKernel") {
+
+    data_deps = [
+        ":LogModule",
+        ":HttpKernel",
+    ]
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//third_party/json:json",
+    ]
+    sources = image_kernel_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# LogModule
+import("//modules/LogModule/log_module.gni")
+library("LogModule") {
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+    ]
+    sources = log_module_sources
+
+    if (is_win) {
+        defines = [
+            "GN_EXPORT",
+        ]
+
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# MessageKernel
+import("//modules/MessageKernel/message_kernel.gni")
+library("MessageKernel") {
+
+    data_deps = [
+        ":LogModule",
+        ":HttpKernel",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//base/protocol:protocol",
+        "//third_party/md5:md5",
+        "//third_party/tinyxml:tinyxml",
+        "//third_party/json:json",
+        "//third_party/protobuf:protobuf",
+    ] 
+
+    sources = message_kernel_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# MessageSync
+import("//modules/MessageSync/message_sync.gni")
+library("MessageSync") {
+    
+    data_deps = [
+        ":LogModule",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+    ]
+
+    sources = message_sync_sources
+
+    if (is_win) {
+        deps += [
+            "//base/asynevent:asynevent",
+        ]
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# NetworkRouting
+import("//modules/NetworkRouting/network_routing.gni")
+library("NetworkRouting") {
+
+    data_deps = [
+        ":LogModule",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//base/socket:socket",
+        "//base/protocol:protocol",
+        "//third_party/sqlite:sqlite",
+        "//third_party/json:json",
+    ]
+
+    sources = network_routing_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# NetworkService
+import("//modules/NetworkService/network_service.gni")
+library("NetworkService") {
+
+    data_deps = [
+        ":LogModule",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//base/socket:socket",
+    ]
+
+    sources = network_service_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+        ]
+    }
+}
+
+# UserFace
+import("//modules/UserFace/user_face.gni")
+library("UserFace") {
+
+    data_deps = [
+        ":LogModule",
+        ":HttpKernel",
+    ]
+
+    deps = [
+        "//system_wrappers:system_wrappers",
+        "//third_party/json:json",
+        "//third_party/sqlite:sqlite",
+    ]
+
+    sources = user_face_sources
+
+    if (is_win) {
+        libs = [
+            "winmm.lib",
+            "ws2_32.lib",
+        ]
+    }
+}

@@ -1,0 +1,38 @@
+import("//library_template.gni")
+st_library("sqlite") {
+
+    include_dirs = [
+        "source",
+    ]
+
+    data_deps = [
+        "//system_wrappers:system_wrappers",
+    ]
+
+    sources = [
+        # "shell.c",
+        "source/sqlite.h",
+        "source/sqlite.cc",
+        "source/statement.h",
+        "source/statement.cc",
+        "source/sqlitecodec.h",
+        "source/sqlitecodec.cc",
+    ]
+
+    if (is_win) {
+        sources += [
+            "sqlite3.c",
+            "sqlite3.h",
+            "sqlite3ext.h",
+            "sqlite3i.h",
+        ]
+    } 
+    if (is_mac || is_android) {
+        sources += [
+            "mac/sqlite3.c",
+            "mac/sqlite3.h",
+            "mac/sqlite3ext.h",
+            "mac/sqlite3i.h",
+        ]
+    }
+}

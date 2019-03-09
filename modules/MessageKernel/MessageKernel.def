@@ -1,0 +1,5 @@
+LIBRARY MessageKernel.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

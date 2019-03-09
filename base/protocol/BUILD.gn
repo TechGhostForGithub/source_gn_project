@@ -1,0 +1,14 @@
+import("//library_template.gni")
+
+st_library("protocol") {
+    #if (is_win) {
+    #    precompiled_header = "stdafx.h"
+    #    precompiled_source = "stdafx.cpp"
+    #}
+
+    # source
+    sources = [
+        "protocol_test.cpp",
+        "protocol_test.h",
+    ]
+}

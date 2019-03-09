@@ -1,0 +1,26 @@
+_client_kernel = get_path_info("../ClientKernel", "abspath")
+
+client_kernel_sources = [
+    "$_client_kernel/source/gn_base_impl.cpp",
+    "$_client_kernel/source/gn_base_impl.h",
+    "$_client_kernel/source/gn_core_impl.cpp",
+    "$_client_kernel/source/gn_core_impl.h",
+    "$_client_kernel/source/gn_shared_data.cpp",
+    "$_client_kernel/source/gn_shared_data.h",
+]
+
+if (is_win) {
+    client_kernel_sources += [
+        "$_client_kernel/dllmain.cpp",
+        "$_client_kernel/source/gn_modules_win.cpp",
+        "$_client_kernel/source/gn_modules_win.h",
+        "$_client_kernel/source/gn_modules_win_com_def.h",
+        "$_client_kernel/source/gn_modules_win_com.h",
+        "$_client_kernel/source/gn_modules_win_com.cpp",
+    ]
+} else {
+    client_kernel_sources += [
+        "$_client_kernel/source/gn_modules_posix.cpp",
+        "$_client_kernel/source/gn_modules_posix.h",
+    ]
+}

@@ -1,0 +1,15 @@
+_file_module = get_path_info("../FileModule", "abspath")
+
+file_module_sources = [
+    "$_file_module/interface/file_module.h",
+    "$_file_module/source/file_module_impl.cpp",
+    "$_file_module/source/file_module_impl.h",
+    "$_file_module/file_module.cpp",
+]
+
+if (is_win) {
+    file_module_sources += [
+        "$_file_module/FileModule.def",
+        "$_file_module/dllmain.cpp",
+    ]
+}

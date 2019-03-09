@@ -1,0 +1,15 @@
+_user_face = get_path_info("../UserFace", "abspath")
+
+user_face_sources =[
+    "$_user_face/interface/user_face.h",
+    "$_user_face/source/user_face_impl.cpp",
+    "$_user_face/source/user_face_impl.h",
+    "$_user_face/user_face.cpp",
+]
+
+if (is_win) {
+    user_face_sources += [
+        "$_user_face/UserFace.def",
+        "$_user_face/dllmain.cpp",
+    ]
+}

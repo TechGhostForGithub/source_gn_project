@@ -1,0 +1,5 @@
+LIBRARY FileTransfer.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

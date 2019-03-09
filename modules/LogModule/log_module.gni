@@ -1,0 +1,11 @@
+_log_module = get_path_info("../LogModule", "abspath")
+
+log_module_sources = [
+    "$_log_module/log_module.cpp",
+    "$_log_module/log_module.h",
+]
+if (is_win) {
+    log_module_sources += [
+        "$_log_module/dllmain.cpp",
+    ]
+}

@@ -1,0 +1,15 @@
+import("//library_template.gni")
+st_library("md5") {
+    
+    sources = [
+        "md5.h",
+        "md5.cpp",
+    ]
+
+    if (is_win) {
+        sources += [
+            "MD5File.h",
+            "MD5File.cpp",
+        ]
+    }
+}

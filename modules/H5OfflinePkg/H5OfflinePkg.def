@@ -1,0 +1,5 @@
+LIBRARY H5OfflinePkg.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

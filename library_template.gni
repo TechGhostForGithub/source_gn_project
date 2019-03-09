@@ -1,0 +1,217 @@
+template("library") {
+
+    assert(defined(invoker.sources),
+           "Need sources in $target_name listing the source files.")
+
+    type = "static_library"
+    if (is_win) {
+        type = "shared_library"
+    } 
+
+    if (is_mac || is_android) {
+        type = "source_set"
+    }
+
+    target(type, target_name) {
+        configs += [ 
+            "//:qt_config",
+        ]
+        
+        sources = invoker.sources
+        # output_prefix_override = true
+        
+        output_dir = "$root_out_dir"
+        # if (!is_debug) {
+        #     output_dir += "/release"
+        # } else {
+        #     output_dir += "/debug"
+        # }
+        
+        lib_dirs = [ 
+            rebase_path("$output_dir/libs"),
+        ]
+        if (type == "static_library") {
+            output_dir += "/libs"
+        }
+
+        if (defined(invoker.deps)) {
+            if (defined(deps)) {
+                deps += invoker.deps
+            } else {
+                deps = invoker.deps
+            }
+            
+        }
+        if (defined(invoker.data_deps)) {
+            if (defined(data_deps)) {
+                data_deps += invoker.data_deps
+            } else {
+                data_deps = invoker.data_deps
+            }
+        }
+        if (defined(invoker.include_dirs)) {
+            if (defined(include_dirs)) {
+                include_dirs += invoker.include_dirs
+            } else {
+                include_dirs = invoker.include_dirs
+            }
+        }
+        if (defined(invoker.configs)) {
+            if (defined(configs)) {
+                configs += invoker.configs
+            } else {
+                configs = invoker.configs
+            }
+        }
+        if (defined(invoker.public_configs)) {
+            if (defined(public_configs)) {
+                public_configs += invoker.public_configs
+            } else {
+                public_configs = invoker.public_configs
+            }
+        }
+        if (defined(invoker.cflags)) {
+            if (defined(cflags)) {
+                cflags += invoker.cflags
+            } else {
+                cflags = invoker.cflags
+            }
+        }
+        if (defined(invoker.cflags_cc)) {
+            if (defined(cflags_cc)) {
+                cflags_cc += invoker.cflags_cc
+            } else {
+                cflags_cc = invoker.cflags_cc
+            }
+        }
+        if (defined(invoker.del_configs) && defined(configs)) {
+            configs -= invoker.del_configs
+        }
+        if (defined(invoker.del_cflags_cc) && defined(cflags_cc)) {
+            cflags_cc -= invoker.del_cflags_cc
+        }
+        if (defined(invoker.libs)) {
+            if (defined(libs)) {
+                libs += invoker.libs
+            } else {
+                libs = invoker.libs
+            }
+        }
+        if (defined(invoker.defines)) {
+            if (defined(defines)) {
+                defines += invoker.defines
+            } else {
+                defines = invoker.defines
+            }
+        }
+    }
+}
+
+template("st_library") {
+
+    assert(defined(invoker.sources),
+           "Need sources in $target_name listing the source files.")
+
+    type = "source_set"
+    if (is_win) {
+        type = "static_library"
+    }
+
+    target(type, target_name) {
+
+        if (defined(invoker.precompiled_header)) {
+            precompiled_header =invoker.precompiled_header
+        }
+
+        if (defined(invoker.precompiled_source)) {
+            precompiled_source =invoker.precompiled_source
+        }
+
+        configs += [ 
+            "//:qt_config",
+        ]
+        sources = invoker.sources
+        # output_prefix_override = true
+
+        output_dir = "$root_out_dir/libs"
+        # if (!is_debug) {
+        #     output_dir += "/release/libs"
+        # } else {
+        #     output_dir += "/debug/libs"
+        # }
+        lib_dirs = [ 
+            rebase_path("$output_dir"),
+        ]
+
+        if (defined(invoker.deps)) {
+            if (defined(deps)) {
+                deps += invoker.deps
+            } else {
+                deps = invoker.deps
+            }
+            
+        }
+        if (defined(invoker.data_deps)) {
+            if (defined(data_deps)) {
+                data_deps += invoker.data_deps
+            } else {
+                data_deps = invoker.data_deps
+            }
+        }
+        if (defined(invoker.include_dirs)) {
+            if (defined(include_dirs)) {
+                include_dirs += invoker.include_dirs
+            } else {
+                include_dirs = invoker.include_dirs
+            }
+        }
+        if (defined(invoker.configs)) {
+            if (defined(configs)) {
+                configs += invoker.configs
+            } else {
+                configs = invoker.configs
+            }
+        }
+        if (defined(invoker.public_configs)) {
+            if (defined(public_configs)) {
+                public_configs += invoker.public_configs
+            } else {
+                public_configs = invoker.public_configs
+            }
+        }
+        if (defined(invoker.cflags)) {
+            if (defined(cflags)) {
+                cflags += invoker.cflags
+            } else {
+                cflags = invoker.cflags
+            }
+        }
+        if (defined(invoker.cflags_cc)) {
+            if (defined(cflags_cc)) {
+                cflags_cc += invoker.cflags_cc
+            } else {
+                cflags_cc = invoker.cflags_cc
+            }
+        }
+        if (defined(invoker.del_configs) && defined(configs)) {
+            configs -= invoker.del_configs
+        }
+        if (defined(invoker.del_cflags_cc) && defined(cflags_cc)) {
+            cflags_cc -= invoker.del_cflags_cc
+        }
+        if (defined(invoker.libs)) {
+            if (defined(libs)) {
+                libs += invoker.libs
+            } else {
+                libs = invoker.libs
+            }
+        }
+        if (defined(invoker.defines)) {
+            if (defined(defines)) {
+                defines += invoker.defines
+            } else {
+                defines = invoker.defines
+            }
+        }
+    }
+}

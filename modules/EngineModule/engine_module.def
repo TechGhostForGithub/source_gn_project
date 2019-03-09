@@ -1,0 +1,5 @@
+LIBRARY EngineModule.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

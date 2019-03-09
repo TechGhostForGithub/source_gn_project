@@ -1,0 +1,5 @@
+LIBRARY MessageSync.dll
+
+EXPORTS
+DllMain PRIVATE
+DllGetClassObject PRIVATE

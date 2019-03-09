@@ -1,0 +1,184 @@
+import("//library_template.gni")
+declare_args() {
+    enable_data_logging = false
+}
+
+st_library("system_wrappers") {
+
+    set_sources_assignment_filter([ 
+        "*_unittest.cc",
+        "*_unittest_disabled.cc",
+    ])
+    
+    include_dirs = [
+        "//", 
+        "interface",
+        "spreadsortlib",
+    ]
+        
+    sources = [
+        "interface/aligned_malloc.h",
+        "source/aligned_malloc.cc",
+        "source/aligned_malloc_unittest.cc",
+        "interface/clock.h",
+        "source/clock.cc",
+        "source/clock_unittest.cc",
+        "source/condition_variable.cc",
+        "source/condition_variable_unittest.cc",
+        "source/cpu_features.cc",
+        "interface/cpu_info.h",
+        "source/cpu_info.cc",
+        "source/critical_section.cc",
+        "source/critical_section_unittest.cc",
+        "interface/data_log.h",
+        "source/data_log_c.cc",
+        "source/data_log_c_helpers_unittest.c",
+        "source/data_log_c_helpers_unittest.h",
+        "source/data_log_helpers_unittest.cc",
+        "source/data_log_unittest.cc",
+        "source/data_log_unittest_disabled.cc",
+        "source/event.cc",
+        "source/event_tracer.cc",
+        "source/event_tracer_unittest.cc",
+        "source/field_trial_default.cc",
+        "source/file_impl.cc",
+        "source/file_impl.h",
+        "interface/logging.h",
+        "source/logging.cc",
+        "source/logging_unittest.cc",
+        "interface/rtp_to_ntp.h",
+        "source/rtp_to_ntp.cc",
+        "source/rtp_to_ntp_unittest.cc",
+        "source/rw_lock.h",
+        "source/rw_lock.cc",
+        "source/rw_lock_generic.h",
+        "source/rw_lock_generic.cc",
+        "source/scoped_vector_unittest.cc",
+        "interface/sigslot.h",
+        "source/sigslot.cc",
+        "interface/sleep.h",
+        "source/sleep.cc",
+        "interface/sort.h",
+        "source/sort.cc",
+        "source/spreadsortlib/spreadsort.hpp",
+        "source/spreadsortlib/spreadsortlib.hpp",
+        "source/stl_util_unittest.cc",
+        "interface/string_wrapper.h",
+        "source/string_wrapper.cc",
+        "source/stringize_macros_unittest.cc",
+        "source/thread.h",
+        "source/thread.cc",
+        "source/thread_unittest.cc",
+        "interface/tick_util.h",
+        "source/tick_util.cc",
+        "interface/time_convert.h",
+        "source/time_convert.cc",
+        "source/timer.h",
+        "source/timer.cc",
+        "source/timestamp_extrapolator.cc",
+        "source/trace_impl.cc",
+        "source/trace_impl.h",
+        "source/unittest_utilities.h",
+        "source/unittest_utilities_unittest.cc",
+    ]
+
+    if (enable_data_logging) {
+        sources += [
+            "source/data_log_no_op.cc",
+        ]
+    } else {
+        sources += [
+            "source/data_log.cc",
+        ]
+    }
+    
+    if (is_win) {
+        sources += [
+            "source/atomic32_win.cc",
+            "source/condition_variable_event_win.cc",
+            "source/condition_variable_event_win.h",
+            "source/condition_variable_native_win.cc",
+            "source/condition_variable_native_win.h",
+            "source/critical_section_win.cc",
+            "source/critical_section_win.h",
+            "source/event_win.cc",
+            "source/event_win.h",
+            "source/rw_lock_win.cc",
+            "source/rw_lock_win.h",
+            "source/set_thread_name_win.h",
+            "source/thread_win.cc",
+            "source/thread_win.h",
+            "source/timer_win.cc",
+            "source/timer_win.h",
+            "source/trace_win.cc",
+            "source/trace_win.h",
+        ]
+        libs = [
+            "winmm.lib",
+            "user32.lib"
+        ]
+    } else {
+        sources += [
+            "source/condition_variable_posix.cc",
+            "source/condition_variable_posix.h",
+            "source/critical_section_posix.cc",
+            "source/critical_section_posix.h",
+            "source/event_posix.cc",
+            "source/event_posix.h",
+            "source/rw_lock_posix.cc",
+            "source/rw_lock_posix.h",
+            "source/thread_posix.cc",
+            "source/thread_posix.h",
+            "source/thread_posix_unittest.cc",
+            "source/trace_posix.cc",
+            "source/trace_posix.h",
+        ]
+    }
+    if (is_linux) {
+        defines = [
+            "CCORE_THREAD_RR",
+            # TODO(andrew): can we select this automatically?
+            # Define this if the Linux system does not support CLOCK_MONOTONIC.
+            #"CCORE_CLOCK_TYPE_REALTIME",
+        ]
+    }
+    if (is_android) {
+        defines = [
+            "CCORE_THREAD_RR",
+            # TODO(leozwang): Investigate CLOCK_REALTIME and CLOCK_MONOTONIC
+            # support on Android. Keep CCORE_CLOCK_TYPE_REALTIME for now,
+            # remove it after I verify that CLOCK_MONOTONIC is fully functional
+            # with condition and event functions in system_wrappers.
+            "CCORE_CLOCK_TYPE_REALTIME",
+        ]
+        sources += [
+            "interface/logcat_trace_context.h",
+            "source/logcat_trace_context.cc",
+            # "source/cpu_features_android.c",
+        ]
+    }
+    if (is_mac) {
+        sources += [
+            "source/atomic32_mac.cc",
+        ]
+    }
+    if (is_mac || is_ios) {
+        defines = [
+            "CCORE_THREAD_RR",
+            "CCORE_CLOCK_TYPE_REALTIME",
+        ]
+        sources += [
+            "source/timer_oc.h",
+            "source/timer_oc.mm",
+        ]
+        libs = [
+            "ApplicationServices.framework"
+        ]
+    } else if (!is_win) {
+        sources += [
+            "source/atomic32_posix.cc",
+            "source/timer_posix.cc",
+            "source/timer_posix.h",
+        ]
+    }
+}
