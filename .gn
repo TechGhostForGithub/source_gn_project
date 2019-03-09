@@ -1,0 +1,9 @@
+buildconfig = "//gn/BUILDCONFIG.gn"
+
+check_targets = [
+    "//modules/*",
+]
+
+default_args = {
+    is_component_build = false
+}
